@@ -71,25 +71,21 @@ find_min_sum_above = ( num )->
 		for y in [ord-1..-ord]
 			v = fill map, ord, y
 			if v>num
-				_log map
 				return v
 
 		for x in [ord-1..-ord]
 			v = fill map, x, -ord
 			if v>num
-				_log map
 				return v
 
 		for y in [1-ord..ord]
 			v = fill map, -ord, y
 			if v>num
-				_log map
 				return v
 
 		for x in [1-ord..ord]
 			v = fill map, x, ord
 			if v>num
-				_log map
 				return v
 
 		ord++
