@@ -7,5 +7,6 @@ f = ( )->
 
 try
 	_log f input
+
 catch e
-	_log e
+	_log.red e
