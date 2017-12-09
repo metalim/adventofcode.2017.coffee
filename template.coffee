@@ -1,12 +1,13 @@
-_log = require 'ololog'
+{_log} = require './util'
 
 input = '''
 '''
 
 f = ( )->
 
-try
-	_log f input
+do ->
+	try
+		_log.yellow f input
 
-catch e
-	_log.red e
+	catch e
+		_log.red e

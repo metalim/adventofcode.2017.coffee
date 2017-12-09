@@ -1,7 +1,21 @@
+_render = (s)->
+	process.stdout.cursorTo 0
+	process.stdout.write s
+	process.stdout.clearLine 1
+	return
 
 exports.log = exports._log = _log = require 'ololog'
+.methods Object.defineProperties {},
+	clear:
+		enumerable: yes
+		configurable: yes
+		get: -> @configure render: _render
 
-exports.permute = ( arr, cb )->
+
+#
+# fast array permutation
+#
+permute = exports.permute = ( arr, cb )->
 	permutation = arr[..]
 	length = permutation.length
 	c = new Array(length).fill 0
@@ -18,10 +32,30 @@ exports.permute = ( arr, cb )->
 			++c[i]
 			i = 1
 			if cb?
-				cb permutation
+				return if no is cb permutation
 			else
 				result.push permutation[..]
 		else
 			c[i] = 0
 			++i
 	result unless cb?
+
+n_of = permute.n_of = ( n, arr, cb, args=[] )->
+	if n<1
+		return cb []
+	for el, i in arr
+		if n>1
+			next = arr[...i].concat arr[i+1..]
+			out = n_of n-1, next, cb, args.concat [el]
+		else
+			out = cb args.concat [el]
+		if out
+			return out
+	return
+
+minmax_of = permute.minmax_of = ( min, max, arr, cb )->
+	for i in [min..max]
+		if out = n_of i, arr, cb
+			return out
+	return
+
