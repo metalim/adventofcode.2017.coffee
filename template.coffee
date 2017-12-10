@@ -1,13 +1,18 @@
-{_log} = require './util'
+{_log,_print,assert} = require './util'
+ansi = require('ansicolor').nice
 
 input = '''
 '''
 
-f = ( )->
+parse = ( input )->
+
+exec = ( )->
 
 do ->
 	try
-		_log.yellow f input
+		_log.darkGray v = parse input
+		_log.yellow exec v
 
 	catch e
 		_log.red e
+	return
