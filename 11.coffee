@@ -52,6 +52,7 @@ do ->
 	try
 
 		test 'ne,ne,ne', 3
+		test 'ne,ne,n', 3
 		test 'ne,ne,sw,sw', 0
 		test 'ne,ne,s,s', 2
 		test 'se,sw,se,sw,sw', 3
