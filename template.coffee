@@ -4,24 +4,29 @@ ansi = require('ansicolor').nice
 input = '''
 '''
 
+test ='''
+'''
+
 class Solver
 	constructor: ( @input )->
-	solve: ->
+	solve1: ->
+	solve2: ->
 
-test = ( ex, inp )->
-	s = new Solver inp
-	if ex is v=s.solve()
-		_log.cyan v
-	else
-		_log.red v, '!=', ex
+verify = ( ex, inp )->
+	s = new Solver inp[0]
+	for ev, i in ex
+		if ev is v=s["solve#{i+1}"] inp[1..]...
+			_log.cyan v
+		else
+			_log.red v, '!=', ex
 	return
 
 do ->
 	try
-		test 0, ''
+		verify [4], [test]
 
 		s = new Solver input
-		_log.yellow s.solve()
+		_log.yellow s.solve1()
 
 	catch e
 		_log.red e
