@@ -18,7 +18,7 @@ verify = ( ex, inp )->
 		if ev is v=s["solve#{i+1}"] inp[1..]...
 			_log.cyan v
 		else
-			_log.red v, '!=', ex
+			_log.red 'expected', ev, 'actual', v
 	return
 
 do ->
