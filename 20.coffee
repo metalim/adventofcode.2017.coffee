@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,assert,manhattan} = require './util'
 ansi = require('ansicolor').nice
 
 
@@ -1020,9 +1020,6 @@ p=<-4,0,0>, v=<2,0,0>, a=<0,0,0>
 p=<-2,0,0>, v=<1,0,0>, a=<0,0,0>
 p=<3,0,0>, v=<-1,0,0>, a=<0,0,0>
 '''
-
-manhattan = (a,b,c)->
-	Math.abs(a)+Math.abs(b)+Math.abs c
 
 min_man = (ps,sh,ii=[0...ps.length])->
 	min_p = []

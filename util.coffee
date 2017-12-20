@@ -22,7 +22,7 @@ exports.assert = assert = ( cond, msg... )->
 #
 # fast array permutation
 #
-permute = exports.permute = ( arr, cb )->
+exports.permute = permute = ( arr, cb )->
 	permutation = arr[..]
 	length = permutation.length
 	c = new Array(length).fill 0
@@ -48,7 +48,7 @@ permute = exports.permute = ( arr, cb )->
 			++i
 	result unless cb?
 
-n_of = permute.n_of = ( n, arr, cb, args=[] )->
+permute.n_of = n_of = ( n, arr, cb, args=[] )->
 	if n<1
 		return cb []
 	for el, i in arr
@@ -61,12 +61,15 @@ n_of = permute.n_of = ( n, arr, cb, args=[] )->
 			return out
 	return
 
-minmax_of = permute.minmax_of = ( min, max, arr, cb )->
+permute.minmax_of = minmax_of = ( min, max, arr, cb )->
 	for i in [min..max]
 		if out = n_of i, arr, cb
 			return out
 	return
 
+
+exports.manhattan = (v...)->
+	v.reduce ((sum,a)-> sum + Math.abs a), 0
 
 
 # print is deprecated
