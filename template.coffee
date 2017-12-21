@@ -9,13 +9,14 @@ test ='''
 
 class Solver
 	constructor: ( @input )->
-	solve1: ->
+	solve1: (v)->
+		v.split('').reverse().join ''
 	solve2: ->
 
-verify = ( ex, inp )->
-	s = new Solver inp[0]
-	for ev, i in ex
-		if ev is v=s["solve#{i+1}"] inp[1..]...
+verify = ( expect, inp, args... )->
+	s = new Solver inp
+	for k, ev of expect
+		if ev is v=s["solve#{k}"] args...
 			_log.cyan v
 		else
 			_log.red 'expected', ev, 'actual', v
@@ -23,10 +24,10 @@ verify = ( ex, inp )->
 
 do ->
 	try
-		verify [4], [test]
+		verify 1:'abc', test, 'cba'
 
 		s = new Solver input
-		_log.yellow s.solve1()
+		_log.yellow s.solve1 'zxc'
 
 	catch e
 		_log.red e
