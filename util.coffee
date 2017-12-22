@@ -33,14 +33,17 @@ exports.expect = expect = ( ex, val )->
 exports.test = test = ->
 	failed = 0
 	ok = 0
+	total = Object.keys(test).length
+	cur = 0
 	for k, fn of test
+		++cur
 		try
 			fn()
 			++ok
-			_log "• #{k}:", ansi.green 'tested'
+			_log "• test #{cur}/#{total}:", ansi.green k
 		catch e
 			++failed
-			_log "• #{k}:", ansi.red 'failed'
+			_log "• test #{cur}/#{total}:", ansi.red "#{k} failed"
 	return
 
 #
