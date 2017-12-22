@@ -1,3 +1,5 @@
+ansi = require 'ansicolor'
+
 _render = (s)->
 	process.stdout.cursorTo 0
 	process.stdout.write s
@@ -13,11 +15,33 @@ exports.trace = exports._trace = _trace = require 'ololog'
 
 exports._log = exports.log = _log = _trace.noLocate
 
+_trace1 = _trace.configure locate:shift:1
+
 exports.assert = assert = ( cond, msg... )->
 	unless cond
-		_trace.red msg...
+		_trace.red '• assertion failed:', msg...
 		throw new Error 'assertion failed'
 	cond
+
+exports.expect = expect = ( ex, val )->
+	if val isnt ex
+		_trace1.red '• expected', ex
+		_trace1.red '• got', val
+		throw new Error 'unexpected'
+	return
+
+exports.test = test = ->
+	failed = 0
+	ok = 0
+	for k, fn of test
+		try
+			fn()
+			++ok
+			_log "• #{k}:", ansi.green 'tested'
+		catch e
+			++failed
+			_log "• #{k}:", ansi.red 'failed'
+	return
 
 #
 # fast array permutation

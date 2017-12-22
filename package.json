@@ -1,5 +1,6 @@
 {
   "dependencies": {
     "ololog": "^1.1.78"
-  }
+  },
+  "devDependencies": {}
 }
