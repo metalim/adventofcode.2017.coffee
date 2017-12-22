@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -45,28 +45,6 @@ jgz f -16
 jgz a -19
 '''
 
-test1 = '''
-set a 1
-add a 2
-mul a a
-mod a 5
-snd a
-set a 0
-rcv a
-jgz a -1
-set a 1
-jgz a -2
-'''
-
-test2 = '''
-snd 1
-snd 2
-snd p
-rcv a
-rcv b
-rcv c
-rcv d
-'''
 
 get = (st, a)->
 	if typeof a is 'number'
@@ -177,26 +155,45 @@ class Solver
 					_log.red 'unknown instruction', c
 		n
 
-verify = ( ex, inp )->
-	s = new Solver inp[0]
-	for ev, i in ex
-		if ev is v=s["solve#{i+1}"] inp[1..]...
-			_log.cyan v
-		else
-			_log.red v, '!=', ex
+test.solve1 = ->
+	s = new Solver '''
+	set a 1
+	add a 2
+	mul a a
+	mod a 5
+	snd a
+	set a 0
+	rcv a
+	jgz a -1
+	set a 1
+	jgz a -2
+	'''
+	expect 4, s.solve1()
+	return
+
+test.solve2 = ->
+	s = new Solver '''
+	snd 1
+	snd 2
+	snd p
+	rcv a
+	rcv b
+	rcv c
+	rcv d
+	'''
+	expect.equal [3,3], s.solve2()
+	return
+
+main = ->
+	s = new Solver input
+	_log.yellow s.solve1()
+	_log.yellow s.solve2()
 	return
 
 do ->
 	try
-		verify [4], [test1]
-
-		s = new Solver test2
-		_log.cyan s.solve2()
-
-		s = new Solver input
-		_log.yellow s.solve1()
-		_log.yellow s.solve2()
-
+		test()
+		main()
 	catch e
 		_log.red e
 	return

@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect} = require './util'
 ansi = require('ansicolor').nice
 MapWalker = require './map_walker'
 
@@ -84,7 +84,7 @@ class Solver
 
 	count_groups: ->
 		@create_map()
-		@log()
+		#@log()
 		num = 0
 		walker = new MapWalker @get
 		for r, y in @map
@@ -103,25 +103,26 @@ class Solver
 		return
 
 
-test = ( c1, c2, inp )->
-	s = new Solver inp
-	if c1 is v=s.count()
-		_log.cyan v
-	else
-		_log.red v, '!=', c1
-	if c2 is v=s.count_groups()
-		_log.cyan v
-	else
-		_log.red v, '!=', c2
+test.solve1 = ->
+	s = new Solver 'flqrgnkx'
+	expect 8108, s.count()
+	return
+
+test.solve2 = ->
+	s = new Solver 'flqrgnkx'
+	expect 1242, s.count_groups()
+	return
+
+main = ->
+	s = new Solver 'xlqgujun'
+	_log.yellow '1:', s.count()
+	_log.yellow '2:', s.count_groups()
 	return
 
 do ->
 	try
-		test 8108, 1242, 'flqrgnkx'
-
-		s = new Solver 'xlqgujun'
-		_log.yellow s.count()
-		_log.yellow s.count_groups()
+		test()
+		main()
 
 	catch e
 		_log.red e

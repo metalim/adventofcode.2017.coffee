@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -17,7 +17,7 @@ class Solver
 		return
 
 	solve: (rep = 1, len = 16)->
-		_log len, rep
+		#_log len, rep
 		s = 'abcdefghijklmnop'[...len].split ''
 		step = 0
 		visited = {}
@@ -49,23 +49,27 @@ class Solver
 		_log.clear ''
 		s.join ''
 
-test = ( ex, inp )->
-	s = new Solver inp[0]
-	if ex is v=s.solve inp[1..]...
-		_log.cyan v
-	else
-		_log.red v, '!=', ex
+test.solve1 = ->
+	s = new Solver 's1,x3/4,pe/b'
+	expect 'baedc', s.solve 1, 5
+	return
+
+test.solve2 = ->
+	s = new Solver 's1,x3/4,pe/b'
+	expect 'ceadb', s.solve 2, 5
+	return
+
+main = ->
+	s = new Solver input
+	_log.yellow '1:', s.solve()
+	_log.yellow '2:', s.solve 1000000000
+	_log.yellow 'verify:', s.solve 10
 	return
 
 do ->
 	try
-		test 'baedc', ['s1,x3/4,pe/b',1,5]
-		#test 'baedc', ['s1,x3/4,pe/b',5,1000000000]
-
-		s = new Solver input
-		_log.yellow s.solve()
-		_log.yellow s.solve 10
-		_log.yellow s.solve 1000000000
+		test()
+		main()
 
 	catch e
 		_log.red e

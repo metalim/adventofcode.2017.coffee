@@ -30,6 +30,9 @@ exports.expect = expect = ( ex, val )->
 		throw new Error 'unexpected'
 	return
 
+expect.equal = ( ex, val )->
+	expect JSON.stringify(ex), JSON.stringify val
+
 exports.test = test = ->
 	failed = 0
 	ok = 0
@@ -42,6 +45,7 @@ exports.test = test = ->
 			++ok
 			_log "• test #{cur}/#{total}:", ansi.green k
 		catch e
+			_log.red e.message
 			++failed
 			_log "• test #{cur}/#{total}:", ansi.red "#{k} failed"
 	return

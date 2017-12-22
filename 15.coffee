@@ -1,8 +1,6 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect} = require './util'
 ansi = require('ansicolor').nice
 
-input = '''
-'''
 
 class Solver
 	constructor: ( @a, @b )->
@@ -37,27 +35,26 @@ class Solver
 		num
 
 
-test = ( ex1, ex2, inp )->
-	s = new Solver inp...
+test.solve1 = ->
+	s = new Solver 65, 8921
+	expect 588, s.solve1()
+	return
 
-	if ex1 is v=s.solve1()
-		_log.cyan v
-	else
-		_log.red v, '!=', ex1
+test.solve2 = ->
+	s = new Solver 65, 8921
+	expect 309, s.solve2()
+	return
 
-	if ex2 is v=s.solve2()
-		_log.cyan v
-	else
-		_log.red v, '!=', ex2
+main = ->
+	s = new Solver 277, 349
+	_log.yellow '1:', s.solve1()
+	_log.yellow '2:', s.solve2()
 	return
 
 do ->
 	try
-		test 588, 309, [65, 8921]
-
-		s = new Solver 277, 349
-		_log.yellow s.solve1()
-		_log.yellow s.solve2()
+		test()
+		main()
 
 	catch e
 		_log.red e

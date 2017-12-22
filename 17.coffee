@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -32,28 +32,33 @@ class Solver
 		_log.clear ''
 		v
 
-test = ( ex, inp )->
-	s = new Solver inp[0]
-	if ex is v=s.solve inp[1..]...
-		_log.cyan v
-	else
-		_log.red v, '!=', ex
+test.solve1 = ->
+	s = new Solver 3
+	expect 638, s.solve 2017
+	return
+
+test.solve2 = ->
+	s = new Solver 3
+	expect 5, s.solve 5, 0
+	expect 5, s.solve_0 5
+	return
+
+test.solve2_real = ->
+	s = new Solver 344
+	expect 246, s.solve 2017,0
+	expect 246, s.solve_0 2017
+	return
+
+main = ->
+	s = new Solver 344
+	_log.yellow s.solve 2017
+	_log.yellow s.solve_0 50000000
 	return
 
 do ->
 	try
-		test 638, [3,2017,2017]
-
-		s = new Solver 3
-		_log.green s.solve 5, 0
-		_log.green s.solve_0 5
-
-		s = new Solver 344
-		_log.yellow s.solve 2017,2017
-		_log.green s.solve 2017,0
-		_log.green s.solve_0 2017
-		_log.yellow s.solve_0 50000000
-
+		test()
+		main()
 	catch e
 		_log.red e
 	return

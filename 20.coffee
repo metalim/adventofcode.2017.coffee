@@ -1,4 +1,4 @@
-{_log,_print,assert,manhattan} = require './util'
+{_log,_print,test,expect,manhattan} = require './util'
 ansi = require('ansicolor').nice
 
 
@@ -1009,18 +1009,6 @@ p=<662,3234,-655>, v=<89,462,-90>, a=<-2,-31,2>
 p=<683,2541,-1586>, v=<103,363,-226>, a=<-4,-27,14>
 '''
 
-test ='''
-p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>
-p=<4,0,0>, v=<0,0,0>, a=<-2,0,0>
-'''
-
-test2 = '''
-p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>
-p=<-4,0,0>, v=<2,0,0>, a=<0,0,0>
-p=<-2,0,0>, v=<1,0,0>, a=<0,0,0>
-p=<3,0,0>, v=<-1,0,0>, a=<0,0,0>
-'''
-
 min_man = (ps,sh,ii=[0...ps.length])->
 	min_p = []
 	min_d = Infinity
@@ -1086,24 +1074,34 @@ class Solver
 		simulate2 @ps,500
 		num = @ps.reduce (n,p,i)->n+ +!!p
 
-verify = ( ex, inp )->
-	s = new Solver inp[0]
-	for ev, i in ex
-		if ev is v=s["solve#{i+1}"] inp[1..]...
-			_log.cyan v
-		else
-			_log.red 'expected', ev, 'actual', v
+test.solve1 = ->
+	s = new Solver '''
+	p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>
+	p=<4,0,0>, v=<0,0,0>, a=<-2,0,0>
+	'''
+	expect 0, s.solve1()
+	return
+
+test.solve2 = ->
+	s = new Solver '''
+	p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>
+	p=<-4,0,0>, v=<2,0,0>, a=<0,0,0>
+	p=<-2,0,0>, v=<1,0,0>, a=<0,0,0>
+	p=<3,0,0>, v=<-1,0,0>, a=<0,0,0>
+	'''
+	expect 1, s.solve2()
+	return
+
+main = ->
+	s = new Solver input
+	_log.yellow 'closest id', s.solve1()
+	_log.yellow 'number of active', s.solve2()
 	return
 
 do ->
 	try
-		verify [0], [test]
-		s = new Solver test2
-		_log.cyan s.solve2()
-
-		s = new Solver input
-		_log.yellow 'closest id', s.solve1()
-		_log.yellow 'number of active', s.solve2()
+		test()
+		main()
 
 	catch e
 		_log.red e

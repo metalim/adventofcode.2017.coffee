@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -251,24 +251,27 @@ verify = ( expect, inp, args... )->
 			_log.red 'expected', ev, 'actual', v
 	return
 
-test = ->
-	assert '.##/#.#/..#' is rotate '.#./..#/###'
+test.solve1 = ->
+	expect '.##/#.#/..#', rotate '.#./..#/###'
 
-	inp='''
+	s = new Solver '''
 	../.# => ##./#../...
 	.#./..#/### => #..#/..../..../#..#
 	'''
-	verify 1:12, inp, 2
+	expect 12, s.solve1 2
+	return
+
+main = ->
+	s = new Solver input
+	#_log s.r
+	_log.yellow s.solve1 5
+	_log.yellow s.solve1 18
 	return
 
 do ->
 	try
 		test()
-
-		s = new Solver input
-		#_log s.r
-		_log.yellow s.solve1 5
-		_log.yellow s.solve1 18
+		main()
 
 	catch e
 		_log.red e
