@@ -1,9 +1,6 @@
 {_log,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
-input = '''
-'''
-
 class Solver
 	constructor: ( @d )->
 	solve: ( rep, find=rep )->

@@ -1,8 +1,6 @@
 {_log,_trace,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
-input = '94,84,0,79,2,27,81,1,123,93,218,23,103,255,254,243'
-
 parse = ( input )->
 	input.split(',').map (a)->+a
 
@@ -70,6 +68,7 @@ test.hash2 = ->
 	return
 
 main ->
+	input = '94,84,0,79,2,27,81,1,123,93,218,23,103,255,254,243'
 	_log.yellow '1:', hash1 input
 	_log.yellow '2:', hash2 input
 	return

@@ -1,9 +1,5 @@
 {_log,test,expect,main} = require './util'
 
-input = 368078
-
-
-
 ###
 65  64  63  62  61  60  59  58  57
 66  37  36  35  34  33  32  31  56
@@ -106,6 +102,7 @@ test.find_min_sum_above = ->
 	return
 
 main ->
+	input = 368078
 	_log.yellow '1:', find_dist input
 	_log.yellow '2:', find_min_sum_above input
 	return

@@ -1,9 +1,5 @@
 {_log,test,expect,main} = require './util'
 
-input = '''
-10	3	15	10	5	15	5	15	9	2	5	8	5	2	3	6
-'''
-
 distribute = ( banks )->
 	visited = {}
 	step = 0
@@ -26,7 +22,7 @@ distribute = ( banks )->
 	return [step,visited[str],step-visited[str]]
 
 parse = ( str )->
-	str.split('\t').map (a)->+a
+	str.split(/\s+/).map (a)->+a
 
 test.step = ->
 	expect.nth(0) 5, distribute parse '0	2	7	0'
@@ -37,7 +33,7 @@ test.looped = ->
 	return
 
 main ->
-	[step,_,looped] = distribute parse input
+	[step,_,looped] = distribute parse '10	3	15	10	5	15	5	15	9	2	5	8	5	2	3	6'
 	_log.yellow '1:', step
 	_log.yellow '2:', looped
 	return
