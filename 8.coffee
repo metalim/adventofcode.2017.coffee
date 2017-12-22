@@ -1,4 +1,4 @@
-_log = require 'ololog'
+{_log,test,expect,main} = require './util'
 
 input = '''
 d dec 683 if qn == 0
@@ -1001,7 +1001,7 @@ rfw dec 869 if d != -2456
 j dec 941 if erb == -473
 vso inc -366 if j > -2509
 h inc -526 if d != -2461
-'''.split '\n'
+'''
 
 r_in = /(\w+) (\w+) (-?\d+) if (\w+) ([!=<>]+) (-?\d+)/
 
@@ -1022,7 +1022,8 @@ modify = ( regs, k, op, v )->
 		when 'inc' then r+v
 		when 'dec' then r-v
 
-exec = ( list )->
+exec = ( inp )->
+	list = inp.split '\n'
 	max = -Infinity
 	regs = {}
 	for s in list
@@ -1030,19 +1031,29 @@ exec = ( list )->
 		if check regs, r[4], r[5], +r[6]
 			v = modify regs, r[1], r[2], +r[3]
 		max = v if max < v
-	_log.yellow 'max temp', max
+	regs.max = max
 	regs
 
 
 get_largest = ( regs )->
 	max = -Infinity
-	for k, v of regs when v > max
+	for k, v of regs when k isnt 'max' and v > max
 		max = v
 	max
 
-try
-	regs = exec input
-	_log.yellow 'max final', get_largest regs
+test.get_largest = ->
+	regs = exec '''
+	b inc 5 if a > 1
+	a inc 1 if b < 5
+	c dec -10 if a >= 1
+	c inc -20 if c == 10
+	'''
+	expect 1, get_largest regs
+	expect 10, regs.max
+	return
 
-catch e
-	_log.red e
+main ->
+	regs = exec input
+	_log.yellow '1: max final', get_largest regs
+	_log.yellow '2: max temp', regs.max
+	return

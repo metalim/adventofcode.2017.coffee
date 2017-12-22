@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -53,7 +53,7 @@ class Solver
 		for l in @input.split '\n'
 			[k,v] = l.split ': '
 			@fw[+k] = +v
-		_log JSON.stringify @fw
+		#_log JSON.stringify @fw
 		return
 
 	get_severity: ( st = 0 )->
@@ -79,36 +79,29 @@ class Solver
 			++i
 		i
 
-test = ( sev, sol, test )->
-	s = new Solver test
-	if sev is v=s.get_severity()
-		_log.cyan v
-	else
-		_log.red v, sev
-	if sol is v=s.solve()
-		_log.cyan v
-	else
-		_log.red v, sol
-	return
-
-do ->
-	try
-
-		test1='''
+test.get_severity = ->
+	s = new Solver '''
 		0: 3
 		1: 2
 		4: 4
 		6: 4
 		'''
-
-		test 24, 10, test1
-
-		s = new Solver input
-		_log.yellow s.get_severity()
-		_log.yellow s.solve()
-
-
-
-	catch e
-		_log.red e
+	expect 24, s.get_severity()
 	return
+
+test.solve = ->
+	s = new Solver '''
+		0: 3
+		1: 2
+		4: 4
+		6: 4
+		'''
+	expect 10, s.solve()
+	return
+
+main ->
+	s = new Solver input
+	_log.yellow '1:', s.get_severity()
+	_log.yellow '2:', s.solve()
+	return
+

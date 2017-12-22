@@ -1,4 +1,4 @@
-{_log,_print,test,expect} = require './util'
+{_log,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -49,16 +49,8 @@ test.solve2_real = ->
 	expect 246, s.solve_0 2017
 	return
 
-main = ->
+main ->
 	s = new Solver 344
 	_log.yellow s.solve 2017
 	_log.yellow s.solve_0 50000000
-	return
-
-do ->
-	try
-		test()
-		main()
-	catch e
-		_log.red e
 	return

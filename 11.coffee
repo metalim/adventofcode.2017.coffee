@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -41,26 +41,17 @@ class Solver
 	distance: ->
 		Math.max @p.map(Math.abs)...
 
-test = ( p, d )->
-	dd = (new Solver p).distance()
-	assert d is dd, 'distance does not match', d, dd
-	_log.cyan p, dd
+test.distance = ->
+	expect 3, (new Solver 'ne,ne,ne').distance()
+	expect 0, (new Solver 'ne,ne,sw,sw').distance()
+	expect 2, (new Solver 'ne,ne,s,s').distance()
+	expect 3, (new Solver 'se,sw,se,sw,sw').distance()
 	return
 
-do ->
-
-	try
-
-		test 'ne,ne,ne', 3
-		test 'ne,ne,n', 3
-		test 'ne,ne,sw,sw', 0
-		test 'ne,ne,s,s', 2
-		test 'se,sw,se,sw,sw', 3
-
-		s = new Solver input
-		_log.yellow s.distance()
-
-	catch e
-		_log.red e
+test.negative_distance = ->
+	expect 3, (new Solver 'ne,ne,n').distance()
 	return
 
+main ->
+	s = new Solver input
+	_log.yellow s.distance()

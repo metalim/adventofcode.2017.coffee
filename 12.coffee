@@ -1,4 +1,4 @@
-{_log,_print,assert} = require './util'
+{_log,_print,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
 
@@ -2043,11 +2043,8 @@ class Solver
 		count
 
 
-
-do ->
-
-	try
-		test ='''
+test.count_nodes_in_group = ->
+	s = new Solver '''
 		0 <-> 2
 		1 <-> 1
 		2 <-> 0, 3, 4
@@ -2056,14 +2053,24 @@ do ->
 		5 <-> 6
 		6 <-> 4, 5
 		'''
-		# s = new Solver test
-		# _log.yellow s.count_nodes_in_group 0
-		# _log.yellow s.count_groups()
+	expect 6, s.count_nodes_in_group 0
+	return
 
-		s = new Solver input
-		_log.yellow s.count_nodes_in_group 0
-		_log.yellow s.count_groups()
+test.count_groups = ->
+	s = new Solver '''
+		0 <-> 2
+		1 <-> 1
+		2 <-> 0, 3, 4
+		3 <-> 2, 4
+		4 <-> 2, 3, 6
+		5 <-> 6
+		6 <-> 4, 5
+		'''
+	expect 2, s.count_groups()
+	return
 
-	catch e
-		_log.red e
+main ->
+	s = new Solver input
+	_log.yellow s.count_nodes_in_group 0
+	_log.yellow s.count_groups()
 	return

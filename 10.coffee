@@ -1,4 +1,4 @@
-{_log,_trace,assert} = require './util'
+{_log,_trace,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
 input = '94,84,0,79,2,27,81,1,123,93,218,23,103,255,254,243'
@@ -14,8 +14,8 @@ diff = ( a, b = [] )->
 			String(c).red
 	out.join ','
 
-exec = ( v, rounds = 1 )->
-	r=[0..255]
+exec = ( v, rounds = 1, len = 256 )->
+	r=[0...len]
 	s=0
 	i=0
 	last = undefined
@@ -37,16 +37,16 @@ exec = ( v, rounds = 1 )->
 parse_codes = ( input )->
 	input.split('').map (c)->c.charCodeAt()
 
-hash1 = (str)->
+hash1 = (str,len)->
 	v = parse str
-	_log.darkGray v.join ','
-	r = exec v
+	#_log.darkGray v.join ','
+	r = exec v, 1, len
 	r[0]*r[1]
 
 hash2 = (str)->
 	v = parse_codes str
 	v = v.concat [17, 31, 73, 47, 23]
-	_log.darkGray v.join ','
+	#_log.darkGray v.join ','
 	r = exec v, 64
 
 	den = for i in [0...16]
@@ -57,21 +57,19 @@ hash2 = (str)->
 
 	den.map((a)->"0#{a.toString 16}"[-2..]).join ''
 
-do ->
-	try
-		_log.yellow hash1 input
 
-		_log.cyan h = hash2 ''
-		assert h is 'a2582a3a0e66e6e86e3812dcb672a272'
-		_log.cyan h = hash2 'AoC 2017'
-		assert h is '33efeb34ea91902bb2f59c9920caa6cd'
-		_log.cyan h = hash2 '1,2,3'
-		assert h is '3efbe78a8d82f29979031a4aa0b16a9d'
-		_log.cyan h = hash2 '1,2,4'
-		assert h is '63960835bcdc130f0b66d7ff4f6a5a8e'
-		_log.yellow hash2 input
+test.hash1 = ->
+	expect 12, hash1 '3,4,1,5', 5
+	return
 
-		
-	catch e
-		_trace.red e
+test.hash2 = ->
+	expect 'a2582a3a0e66e6e86e3812dcb672a272', hash2 ''
+	expect '33efeb34ea91902bb2f59c9920caa6cd', hash2 'AoC 2017'
+	expect '3efbe78a8d82f29979031a4aa0b16a9d', hash2 '1,2,3'
+	expect '63960835bcdc130f0b66d7ff4f6a5a8e', hash2 '1,2,4'
+	return
+
+main ->
+	_log.yellow '1:', hash1 input
+	_log.yellow '2:', hash2 input
 	return

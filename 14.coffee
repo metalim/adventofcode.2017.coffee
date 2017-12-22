@@ -1,4 +1,4 @@
-{_log,_print,test,expect} = require './util'
+{_log,_print,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 MapWalker = require './map_walker'
 
@@ -113,17 +113,9 @@ test.solve2 = ->
 	expect 1242, s.count_groups()
 	return
 
-main = ->
+main ->
 	s = new Solver 'xlqgujun'
 	_log.yellow '1:', s.count()
 	_log.yellow '2:', s.count_groups()
 	return
 
-do ->
-	try
-		test()
-		main()
-
-	catch e
-		_log.red e
-	return

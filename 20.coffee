@@ -1,4 +1,4 @@
-{_log,_print,test,expect,manhattan} = require './util'
+{_log,test,expect,main,manhattan} = require './util'
 ansi = require('ansicolor').nice
 
 
@@ -1092,17 +1092,8 @@ test.solve2 = ->
 	expect 1, s.solve2()
 	return
 
-main = ->
+main ->
 	s = new Solver input
-	_log.yellow 'closest id', s.solve1()
-	_log.yellow 'number of active', s.solve2()
-	return
-
-do ->
-	try
-		test()
-		main()
-
-	catch e
-		_log.red e
+	_log.yellow '1: closest id', s.solve1()
+	_log.yellow '2: number of active', s.solve2()
 	return

@@ -1,4 +1,4 @@
-{_log,_print,test,expect} = require './util'
+{_log,_print,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -242,7 +242,6 @@ class Solver
 		_log.red 'this should never execute'
 		return
 
-	solve2: ->
 
 test.solve = ->
 	s = new Solver '''
@@ -257,13 +256,8 @@ test.solve = ->
 	expect 'ABCDEF:38', s.solve1()
 	return
 
-do ->
-	try
-		test()
-
-		s = new Solver input
-		_log.yellow s.solve1()
-
-	catch e
-		_log.red e
+main ->
+	s = new Solver input
+	_log.yellow s.solve1()
 	return
+

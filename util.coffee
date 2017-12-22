@@ -33,6 +33,9 @@ exports.expect = expect = ( ex, val )->
 expect.equal = ( ex, val )->
 	expect JSON.stringify(ex), JSON.stringify val
 
+expect.nth = ( i )-> ( ex, val )-> expect ex, val[i]
+expect.nth.equal = ( i )-> ( ex, val )-> expect.equal ex, val[i]
+
 exports.test = test = ->
 	failed = 0
 	ok = 0
@@ -48,6 +51,14 @@ exports.test = test = ->
 			_log.red e.message
 			++failed
 			_log "• test #{cur}/#{total}:", ansi.red "#{k} failed"
+	return
+
+exports.main = main = ( fn )->
+	try
+		test()
+		fn()
+	catch e
+		_log.red e
 	return
 
 #

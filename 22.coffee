@@ -1,4 +1,4 @@
-{_log,_print,assert,expect,test} = require './util'
+{_log,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 
 input = '''
@@ -65,7 +65,10 @@ class Solver
 
 	solve2: (steps)->
 		infect = 0
+		step = 0
 		@walk steps, (v, dir)->
+			++step
+			_log.clear.darkGray step, infect unless step%1000000
 			switch v
 				when '#'
 					['F', dir+1]
@@ -76,6 +79,7 @@ class Solver
 					['#', dir]
 				else
 					['W', dir-1]
+		_log.clear ''
 		infect
 
 test.solve1 = ->
@@ -91,16 +95,8 @@ test.solve2 = ->
 	expect 2511944, s.solve2 10000000
 	return
 
-main = ->
+main ->
 	s = new Solver input
 	_log.yellow s.solve1 10000
 	_log.yellow s.solve2 10000000
-	return
-
-do ->
-	try
-		test()
-		main()
-	catch e
-		_log.red e
 	return
