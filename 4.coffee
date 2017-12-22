@@ -1,4 +1,4 @@
-_log = console.log.bind console
+{_log,test,expect,main} = require './util'
 
 input = '''
 nyot babgr babgr kqtu kqtu kzshonp ylyk psqk
@@ -513,7 +513,7 @@ piyl haajm stwzpp xvjg amjah
 gye efwwwiv kyv zmtcgmi ifwvwew
 dflx gdtb jyoj jyoj dflx aqhycgi xffnn
 inc mpys mzqmcwx vryz ibqrzc pmsy fat rojpxwy rcbqzi gjef
-'''.split '\n'
+'''
 
 
 is_valid = ( p, sorted )->
@@ -525,14 +525,34 @@ is_valid = ( p, sorted )->
 		words[w]=yes
 	yes
 
-count_valid = ( phrases, sorted )->
+count_valid = ( inp, sorted )->
 	valid = 0
+	phrases = inp.split '\n'
 	for p in phrases when is_valid p, sorted
 		valid++
 	valid
 
 
-_log count_valid input
-_log count_valid 'asdf fasd\nasdf asdf'.split '\n'
-_log count_valid input, yes
-_log count_valid 'asdf fasd\nasdf asdf'.split('\n'), yes
+test.valid1 = ->
+	expect yes, is_valid 'aa bb cc dd ee'
+	expect no, is_valid 'aa bb cc dd aa'
+	expect yes, is_valid 'aa bb cc dd aaa'
+	return
+
+test.valid2 = ->
+	expect yes, is_valid 'abcde fghij', yes
+	expect no, is_valid 'abcde xyz ecdab', yes
+	expect yes, is_valid 'a ab abc abd abf abj', yes
+	expect yes, is_valid 'iiii oiii ooii oooi oooo', yes
+	expect no, is_valid 'oiii ioii iioi iiio', yes
+	return
+
+test.count_valid = ->
+	expect 1, count_valid 'asdf fasd\nasdf asdf'
+	expect 0, count_valid 'asdf fasd\nasdf asdf', yes
+	return
+
+main ->
+	_log.yellow '1:', count_valid input
+	_log.yellow '2:', count_valid input, yes
+	return

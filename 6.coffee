@@ -1,4 +1,4 @@
-_log = require 'ololog'
+{_log,test,expect,main} = require './util'
 
 input = '''
 10	3	15	10	5	15	5	15	9	2	5	8	5	2	3	6
@@ -22,12 +22,22 @@ distribute = ( banks )->
 		while max--
 			j = (j+1)%banks.length
 			++banks[j]
-	_log JSON.stringify banks
+	#_log JSON.stringify banks
 	return [step,visited[str],step-visited[str]]
 
-try
-	_log JSON.stringify banks = input.split('\t').map (a)->+a
-	_log distribute banks
+parse = ( str )->
+	str.split('\t').map (a)->+a
 
-catch e
-	_log.red e
+test.step = ->
+	expect.nth(0) 5, distribute parse '0	2	7	0'
+	return
+
+test.looped = ->
+	expect.nth(2) 4, distribute parse '0	2	7	0'
+	return
+
+main ->
+	[step,_,looped] = distribute parse input
+	_log.yellow '1:', step
+	_log.yellow '2:', looped
+	return

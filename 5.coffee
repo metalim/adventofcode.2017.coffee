@@ -1,4 +1,4 @@
-_log = require 'ololog'
+{_log,test,expect,main} = require './util'
 
 input = '''
 2
@@ -1075,7 +1075,7 @@ input = '''
 -195
 -342
 -915
-'''.split('\n').map (a)->+a
+'''
 
 escape1 = ( list )->
 	i = 0
@@ -1098,8 +1098,18 @@ escape2 = ( list )->
 		i = next
 	num
 
-try
-	_log escape1 input[..]
-	_log escape2 input[..]
-catch e
-	_log e
+parse = ( inp )->
+	inp.split('\n').map (a)->+a
+
+test.escape1 = ->
+	expect 5, escape1 parse '0\n3\n0\n1\n-3'
+	return
+
+test.escape2 = ->
+	expect 10, escape2 parse '0\n3\n0\n1\n-3'
+	return
+
+main ->
+	_log.yellow '1:', escape1 parse input
+	_log.yellow '2:',  escape2 parse input
+	return

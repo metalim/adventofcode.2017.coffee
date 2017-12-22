@@ -1,4 +1,4 @@
-_log = require 'ololog'
+{_log,test,expect,main} = require './util'
 
 input = '''
 hndzyx (28)
@@ -1040,13 +1040,13 @@ sqkra (97)
 oatauv (204) -> hfzsc, pvuno, osckuj, dcpgsg
 ddeso (43)
 lvbgvb (53)
-'''.split '\n'
+'''
 
 r_in = /(\w+) \((\d+)\)/
 
 parse = ( input )->
 	out = {}
-	for l in input
+	for l in input.split '\n'
 		[a,b] = l.split ' -> '
 		res = r_in.exec a
 		out[res[1]] =
@@ -1108,20 +1108,59 @@ find_fixed_weight = ( tree )->
 				wrong = c.tw
 		else
 			right = c.tw
-	_log right, wrong
+	#_log right, wrong
 	for k, c of tree.c when c.tw is wrong
 		return c.w + right - wrong
 	_log.red 'oops'
 	return
 
-try
-	spec = parse input
-	#require('fs').writeFileSync '7.json', JSON.stringify spec,null,' '
-	_log.green root = find_root spec
-	tree = build_tree spec, root
-	_log 'unbalanced', is_unbalanced tree
-	_log unb = find_deepest_unbalanced tree
-	_log.green find_fixed_weight unb
+test.find_root = ->
+	spec = parse '''
+	pbga (66)
+	xhth (57)
+	ebii (61)
+	havc (66)
+	ktlj (57)
+	fwft (72) -> ktlj, cntj, xhth
+	qoyq (66)
+	padx (45) -> pbga, havc, qoyq
+	tknk (41) -> ugml, padx, fwft
+	jptl (61)
+	ugml (68) -> gyxo, ebii, jptl
+	gyxo (61)
+	cntj (57)
+	'''
+	expect 'tknk', find_root spec
+	return
 
-catch e
-	_log.red e
+test.balance = ->
+	spec = parse '''
+	pbga (66)
+	xhth (57)
+	ebii (61)
+	havc (66)
+	ktlj (57)
+	fwft (72) -> ktlj, cntj, xhth
+	qoyq (66)
+	padx (45) -> pbga, havc, qoyq
+	tknk (41) -> ugml, padx, fwft
+	jptl (61)
+	ugml (68) -> gyxo, ebii, jptl
+	gyxo (61)
+	cntj (57)
+	'''
+	tree = build_tree spec, find_root spec
+	expect yes, is_unbalanced tree
+	unb = find_deepest_unbalanced tree
+	expect yes, unb.c.ugml?
+	expect 60, find_fixed_weight unb
+	return
+
+main ->
+	spec = parse input
+	_log.yellow '1:', root = find_root spec
+	tree = build_tree spec, root
+	unb = find_deepest_unbalanced tree
+	_log.yellow '2:', find_fixed_weight unb
+	return
+

@@ -1,4 +1,4 @@
-_log = console.log.bind console
+{_log,test,expect,main} = require './util'
 
 input = 368078
 
@@ -92,5 +92,20 @@ find_min_sum_above = ( num )->
 
 	return
 
-_log find_dist input
-_log find_min_sum_above input
+test.find_dist = ->
+	expect 0, find_dist 1
+	expect 3, find_dist 12
+	expect 2, find_dist 23
+	expect 31, find_dist 1024
+	return
+
+test.find_min_sum_above = ->
+	expect 2, find_min_sum_above 1
+	expect 122, find_min_sum_above 60
+	expect 806, find_min_sum_above 750
+	return
+
+main ->
+	_log.yellow '1:', find_dist input
+	_log.yellow '2:', find_min_sum_above input
+	return

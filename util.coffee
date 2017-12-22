@@ -33,8 +33,11 @@ exports.expect = expect = ( ex, val )->
 expect.equal = ( ex, val )->
 	expect JSON.stringify(ex), JSON.stringify val
 
-expect.nth = ( i )-> ( ex, val )-> expect ex, val[i]
-expect.nth.equal = ( i )-> ( ex, val )-> expect.equal ex, val[i]
+expect.nth = ( i )-> ( ex, val )->
+	expect ex, val[i]
+
+expect.nth.equal = ( i )-> ( ex, val )->
+	expect.equal ex, val[i]
 
 exports.test = test = ->
 	failed = 0

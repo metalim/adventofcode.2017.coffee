@@ -1,4 +1,4 @@
-_log = console.log.bind console
+{_log,test,expect,main} = require './util'
 
 sheet = '''
 5806	6444	1281	38	267	1835	223	4912	5995	230	4395	2986	6048	4719	216	1201
@@ -19,11 +19,11 @@ sheet = '''
 128	2088	3422	111	3312	740	3024	1946	920	131	112	477	3386	2392	1108	2741
 '''
 
-f = ( sh )->
+checksum1 = ( sh )->
 	sum = 0
 	for s in sh.split '\n'
 		min = max = null
-		for n in s.split '\t'
+		for n in s.split /\s+/
 			min = Math.min +n, min ? +n
 			max = Math.max +n, max ? +n
 		sum += max - min
@@ -39,11 +39,29 @@ div = ( row )->
 	throw new Error 'invalid input'
 	return
 
-f2 = ( sh )->
+checksum2 = ( sh )->
 	sum = 0
 	for s in sh.split '\n'
-		sum += div s.split '\t'
+		sum += div s.split /\s+/
 	sum
 
-_log f sheet
-_log f2 sheet
+test.checksum = ->
+	expect 18, checksum1 '''
+	5 1 9 5
+	7 5 3
+	2 4 6 8
+	'''
+	return
+
+test.checksum2 = ->
+	expect 9, checksum2 '''
+	5 9 2 8
+	9 4 7 3
+	3 8 6 5
+	'''
+	return
+
+main ->
+	_log.yellow '1:', checksum1 sheet
+	_log.yellow '2:', checksum2 sheet
+	return
