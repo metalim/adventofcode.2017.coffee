@@ -1,8 +1,5 @@
-{_log,_print,assert,expect,test} = require './util'
+{_log,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
-
-input = '''
-'''
 
 class Solver
 	constructor: ( @input )->
@@ -10,11 +7,6 @@ class Solver
 		v+1
 	solve2: (v)->
 		v+2
-
-main = ->
-	s = new Solver input
-	_log.yellow s.solve1 1
-	return
 
 test.solve1 = ->
 	s = new Solver ''
@@ -26,10 +18,8 @@ test.solve2 = ->
 	expect 3, s.solve2 1
 	return
 
-do ->
-	try
-		test()
-		main()
-	catch e
-		_log.red e
+main ->
+	s = new Solver require './input/1.txt'
+	_log.yellow '1:', s.solve1 1
+	_log.yellow '2:', s.solve2 2
 	return
