@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "-test": "metalim/.test",
     "ololog": "^1.1.78"
   },
   "devDependencies": {}

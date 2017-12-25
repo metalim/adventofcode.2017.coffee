@@ -1,3 +1,4 @@
+#!/usr/bin/env coffee
 {_log,test,expect,main} = require './util'
 ansi = require('ansicolor').nice
 

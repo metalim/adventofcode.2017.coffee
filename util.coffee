@@ -1,12 +1,12 @@
-ansi = require 'ansicolor'
-fs = require 'fs'
 
 #
-# support for input = require './input/123.txt'
+# support for: input = require './input/123.txt'
 #
-require.extensions['.txt'] = ( module, filename )->
-	module.exports = fs.readFileSync filename, 'utf8'
-	return
+if process?
+	fs = require 'fs'
+	require.extensions['.txt'] = ( module, filename )->
+		module.exports = fs.readFileSync filename, 'utf8'
+		return
 
 #
 # raw rednerer for _log.clear to print on the same line.
@@ -31,81 +31,6 @@ exports.trace = exports._trace = _trace = require 'ololog'
 # _log without locate.
 #
 exports._log = exports.log = _log = _trace.noLocate
-
-#
-# _trace1 to skip 1 level of locate
-#
-_trace1 = _trace.configure locate:shift:1
-
-#
-# Deprecated. classic assert. Use expect() instead.
-#
-exports.assert = assert = ( cond, msg... )->
-	unless cond
-		_trace.red '• assertion failed:', msg...
-		throw new Error 'assertion failed'
-	cond
-
-#
-# expect <expected>, <actual>
-#
-exports.expect = expect = ( ex, val )->
-	if val isnt ex
-		_trace1.red '• expected', ex
-		_trace1.red '• got', val
-		throw new Error 'unexpected'
-	return
-
-#
-# expect same values, can be different object.
-#
-expect.equal = ( ex, val )->
-	expect JSON.stringify(ex), JSON.stringify val
-
-#
-# expect.nth(2) 222, [0, 111, 222, 333]
-#
-expect.nth = ( i )-> ( ex, val )->
-	expect ex, val[i]
-
-#
-# nth + equal
-#
-expect.nth.equal = ( i )-> ( ex, val )->
-	expect.equal ex, val[i]
-
-#
-# test.something = -> # define test
-#   ...
-# test() # to run all tests
-#
-exports.test = test = ->
-	failed = 0
-	ok = 0
-	total = Object.keys(test).length
-	cur = 0
-	for k, fn of test
-		++cur
-		try
-			fn()
-			++ok
-			_log "• test #{cur}/#{total}:", ansi.green k
-		catch e
-			_log.red e.message
-			++failed
-			_log "• test #{cur}/#{total}:", ansi.red "#{k} failed"
-	return
-
-#
-# main -> # runs all tests, then the function.
-#
-exports.main = main = ( fn )->
-	try
-		test()
-		fn()
-	catch e
-		_log.red e
-	return
 
 #
 # fast array permutation
@@ -159,6 +84,23 @@ permute.minmax_of = minmax_of = ( min, max, arr, cb )->
 exports.manhattan = (v...)->
 	v.reduce ((sum,a)-> sum + Math.abs a), 0
 
+#
+# re-export .test
+#
+Test = require '-test'
+exports[k]=v for k,v of Test
 
-# print is deprecated
+
+
+#
+# Deprecated: print
+#
 exports._print = exports.print = _log 
+#
+# Deprecated: classic assert. Use expect() instead.
+#
+exports.assert = assert = ( cond, msg... )->
+	unless cond
+		_trace.red '• assertion failed:', msg...
+		throw new Error 'assertion failed'
+	cond
