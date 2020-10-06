@@ -1,5 +1,5 @@
 #!/usr/bin/env coffee
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 class Solver
@@ -19,7 +19,7 @@ test.solve2 = ->
 	expect 3, s.solve2 1
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/1.txt'
 	_log.yellow '1:', s.solve1 1
 	_log.yellow '2:', s.solve2 2

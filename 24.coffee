@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 class Solver
@@ -67,7 +67,7 @@ test.solve2 = ->
 	expect.nth(0) 19, s.solve2()
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/24.txt'
 	_log.yellow '1: [sum,length] =', s.solve1()
 	_log.yellow '2: [sum,length] =', s.solve2()

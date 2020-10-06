@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 get = (st, a)->
@@ -130,7 +130,7 @@ test.optimized = ->
 	expect s1.h, s22.h
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/23.txt'
 	_log.yellow '1:', s.solve1().mul
 	_log.yellow '2:', s.solve2n2(1).h

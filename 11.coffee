@@ -1,4 +1,4 @@
-{_log,_print,test,expect,main} = require './util'
+{_log,_print,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 
@@ -43,7 +43,7 @@ test.negative_distance = ->
 	expect 3, (new Solver 'ne,ne,n').distance()
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/11.txt'
 	_log.yellow '1:', s.distance()
 	_log.yellow '2:', s.max

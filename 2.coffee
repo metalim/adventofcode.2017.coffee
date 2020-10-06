@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 checksum1 = ( sh )->
 	sum = 0
@@ -42,7 +42,7 @@ test.checksum2 = ->
 	'''
 	return
 
-main ->
+testAndRun ->
 	input = require './input/2.txt'
 	_log.yellow '1:', checksum1 input
 	_log.yellow '2:', checksum2 input

@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 ###
 65  64  63  62  61  60  59  58  57
@@ -101,7 +101,7 @@ test.find_min_sum_above = ->
 	expect 806, find_min_sum_above 750
 	return
 
-main ->
+testAndRun ->
 	input = 368078
 	_log.yellow '1:', find_dist input
 	_log.yellow '2:', find_min_sum_above input

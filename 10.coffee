@@ -1,4 +1,4 @@
-{_log,_trace,test,expect,main} = require './util'
+{_log,_trace,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 parse = ( input )->
@@ -67,7 +67,7 @@ test.hash2 = ->
 	expect '63960835bcdc130f0b66d7ff4f6a5a8e', hash2 '1,2,4'
 	return
 
-main ->
+testAndRun ->
 	input = '94,84,0,79,2,27,81,1,123,93,218,23,103,255,254,243'
 	_log.yellow '1:', hash1 input
 	_log.yellow '2:', hash2 input

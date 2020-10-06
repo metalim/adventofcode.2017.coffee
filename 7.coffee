@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 r_in = /(\w+) \((\d+)\)/
 
@@ -114,7 +114,7 @@ test.balance = ->
 	expect 60, find_fixed_weight unb
 	return
 
-main ->
+testAndRun ->
 	spec = parse require './input/7.txt'
 	_log.yellow '1:', root = find_root spec
 

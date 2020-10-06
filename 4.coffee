@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 is_valid = ( p, sorted )->
 	words = {}
@@ -36,7 +36,7 @@ test.count_valid = ->
 	expect 0, count_valid 'asdf fasd\nasdf asdf', yes
 	return
 
-main ->
+testAndRun ->
 	input = require './input/4.txt'
 	_log.yellow '1:', count_valid input
 	_log.yellow '2:', count_valid input, yes

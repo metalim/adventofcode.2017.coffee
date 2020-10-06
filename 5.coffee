@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 escape1 = ( list )->
 	i = 0
@@ -32,7 +32,7 @@ test.escape2 = ->
 	expect 10, escape2 parse '0\n3\n0\n1\n-3'
 	return
 
-main ->
+testAndRun ->
 	input = require './input/5.txt'
 	_log.yellow '1:', escape1 parse input
 	_log.yellow '2:',  escape2 parse input

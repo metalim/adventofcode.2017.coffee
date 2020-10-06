@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 DIR = [
@@ -67,7 +67,7 @@ test.solve2 = ->
 	expect 2511944, s.solve2 10000000
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/22.txt'
 	_log.yellow '1:', s.solve1 10000
 	_log.yellow '2:', s.solve2 10000000

@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 distribute = ( banks )->
 	visited = {}
@@ -32,7 +32,7 @@ test.looped = ->
 	expect.nth(2) 4, distribute parse '0	2	7	0'
 	return
 
-main ->
+testAndRun ->
 	[step,_,looped] = distribute parse '10	3	15	10	5	15	5	15	9	2	5	8	5	2	3	6'
 	_log.yellow '1:', step
 	_log.yellow '2:', looped

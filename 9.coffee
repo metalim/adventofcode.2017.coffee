@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 
 clear_garbage = ( input, cb )->
@@ -60,7 +60,7 @@ test.cleared = ->
 	expect.nth(1) 10, get_score '<{o"i!a,<{i<a>'
 	return
 
-main ->
+testAndRun ->
 	[score,cleared] = get_score require './input/9.txt'
 	_log.yellow '1:', score
 	_log.yellow '2:', cleared

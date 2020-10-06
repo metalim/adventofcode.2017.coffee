@@ -1,4 +1,4 @@
-{_log,_print,test,expect,main} = require './util'
+{_log,_print,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 
@@ -66,7 +66,7 @@ test.count_groups = ->
 	expect 2, s.count_groups()
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/12.txt'
 	_log.yellow s.count_nodes_in_group 0
 	_log.yellow s.count_groups()

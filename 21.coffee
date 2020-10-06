@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 rotate = (l)->
@@ -150,7 +150,7 @@ test.solve1 = ->
 	expect 12, s.solve1 2
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/21.txt'
 	#_log s.r
 	_log.yellow '1:', s.solve1 5

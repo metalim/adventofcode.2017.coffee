@@ -1,4 +1,4 @@
-{_log,_print,test,expect,main} = require './util'
+{_log,_print,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 class Solver
@@ -53,7 +53,7 @@ test.solve = ->
 	expect 10, s.solve()
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/13.txt'
 	_log.yellow '1:', s.get_severity()
 	_log.yellow '2:', s.solve()

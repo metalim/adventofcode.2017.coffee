@@ -1,4 +1,4 @@
-{_log,_print,test,expect,main} = require './util'
+{_log,_print,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 class Solver
@@ -40,17 +40,17 @@ class Solver
 test.solve = ->
 	s = new Solver '''
 	.
-	    |          
-	    |  +--+    
-	    A  |  C    
-	F---|----E|--+ 
-	    |  |  |  D 
-	    +B-+  +--+ 
+	    |
+	    |  +--+
+	    A  |  C
+	F---|----E|--+
+	    |  |  |  D
+	    +B-+  +--+
 	'''
 	expect.equal ['ABCDEF',38], s.solve()
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/19.txt'
 	[out,steps] = s.solve()
 	_log.yellow '1:', out

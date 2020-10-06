@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 solve1 = ( s )->
 	sum = 0
@@ -29,7 +29,7 @@ test.solve2 = ->
 	expect 4, solve2 '12131415'
 	return
 
-main ->
+testAndRun ->
 	input = require './input/1.txt'
 	_log.yellow '1:', solve1 input
 	_log.yellow '2:', solve2 input

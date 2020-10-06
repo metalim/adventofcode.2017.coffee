@@ -1,4 +1,4 @@
-{_log,_print,test,expect,main} = require './util'
+{_log,_print,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 class Solver
@@ -55,7 +55,7 @@ test.solve2 = ->
 	expect 'ceadb', s.solve 2, 5
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/16.txt'
 	_log.yellow '1:', s.solve()
 	_log.yellow '2:', s.solve 1000000000

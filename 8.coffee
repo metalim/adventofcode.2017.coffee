@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 
 check = ( regs, k, op, v )->
 	r=regs[k]?=0
@@ -48,7 +48,7 @@ test.get_largest = ->
 	expect 10, regs.max
 	return
 
-main ->
+testAndRun ->
 	regs = exec require './input/8.txt'
 	_log.yellow '1: max final', get_largest regs
 	_log.yellow '2: max temp', regs.max

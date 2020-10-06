@@ -1,4 +1,4 @@
-{_log,test,expect,main} = require './util'
+{_log,test,expect,testAndRun} = require './util'
 ansi = require('ansicolor').nice
 
 get = (st, a)->
@@ -139,7 +139,7 @@ test.solve2 = ->
 	expect.equal [3,3], s.solve2()
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/18.txt'
 	_log.yellow '1:', s.solve1()
 	_log.yellow '2:', s.solve2()[1]

@@ -1,4 +1,4 @@
-{_log,test,expect,main,manhattan} = require './util'
+{_log,test,expect,testAndRun,manhattan} = require './util'
 ansi = require('ansicolor').nice
 
 min_man = (ps,sh,ii=[0...ps.length])->
@@ -84,7 +84,7 @@ test.solve2 = ->
 	expect 1, s.solve2()
 	return
 
-main ->
+testAndRun ->
 	s = new Solver require './input/20.txt'
 	_log.yellow '1: closest id', s.solve1()
 	_log.yellow '2: number of active', s.solve2()

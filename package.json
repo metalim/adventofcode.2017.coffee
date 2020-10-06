@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "-test": "metalim/.test",
-    "ololog": "^1.1.78"
+    "-test": "github:metalim/.test#0.3.0",
+    "ololog": "^1.1.162"
   },
   "devDependencies": {}
 }
